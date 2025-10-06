@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Form</title>
+    <img src="C:\Users\VINAYK\Downloads\nova care.jpg" alt="nova care" style="width: 300px; align-items: center;">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #7fffd4; /* Aqua Green */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+        .header {
+            width: 100%;
+            height: 300px;
+            background-image: url("C:\Users\VINAYK\Downloads\page2.jpg");
+            background-size: cover;
+            background-position: center;
+            animation: floatImage 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes floatImage { 
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .form-container h2 {
+            color: #20b2aa; /* Light Sea Green */
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4682b4; /* Steel Blue */
+            font-size: 1.1em;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 2px solid #b0e0e6; /* Powder Blue */
+            border-radius: 8px;
+            font-size: 1em;
+            color: #555;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group select:focus {
+            border-color: #20b2aa; /* Light Sea Green */
+            outline: none;
+        }
+        .submit-button {
+            background-color: #3cb371; /* Medium Sea Green */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+        .submit-button:hover {
+            background-color: #2e8b57; /* Sea Green */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <form action="mainpage.html" method="post">
+
+    <div class="header"></div>
+
+    <div class="form-container">
+        <h2>Patient Information Form</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+                <label for="locality">Locality:</label>
+                <input type="text" id="locality" name="locality" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" min="0" max="120" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <button type="submit" class="submit-button">Submit Information</button>
+        </form>
+    </div>
+    </form>
+</body>
+</html>

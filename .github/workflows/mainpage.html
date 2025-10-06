@@ -1,0 +1,166 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOV-INFO HUB - Voiceflow Integration</title>
+    <style>
+        /* --- BASE STYLES & LAYOUT --- */
+        body { font-family: Arial, sans-serif; margin: 0; background-color: #f0f3f6; display: flex; flex-direction: column; min-height: 100vh; }
+        .page-container { display: flex; flex-direction: column; flex-grow: 1; background-color: #1a3b5c; }
+        .main-wrapper { display: flex; flex-grow: 1; background-color: #f0f3f6; border-top-left-radius: 10px; border-top-right-radius: 10px; overflow: hidden; }
+        .top-bar { background-color: #1a3b5c; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-section { font-size: 20px; font-weight: bold; }
+        .top-nav a { color: white; text-decoration: none; padding: 8px 15px; margin-left: 10px; border-radius: 5px; }
+        .top-nav a:last-child { background-color: #5cb85c; font-weight: bold; }
+        
+        /* --- SIDEBAR STYLES --- */
+        .sidebar { width: 250px; background-color: #1a3b5c; color: white; padding-top: 20px; flex-shrink: 0; height: 100%; }
+        .sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav a { display: flex; align-items: center; padding: 12px 20px; text-decoration: none; color: white; font-size: 16px; transition: background-color 0.3s; }
+        .sidebar-nav li:first-child a { background-color: #3b6b9c; border-left: 5px solid #6b8fce; padding-left: 15px; }
+        .icon { margin-right: 10px; font-size: 20px; }
+        .icon-about:before { content: "\24D8"; } .icon-helpline:before { content: "\260E"; } .icon-schemes:before { content: "\1F4DC"; }
+        
+        /* --- MAIN CONTENT & INTERACTIVITY --- */
+        .content-area { flex-grow: 1; padding: 20px; background-color: #f4f7f6; }
+        .sidebar-content-wrapper > div { display: none; }
+        /* CSS :target logic to show content based on sidebar link click */
+        #content-about-1:target, #content-about-2:target, #content-helpline:target, #content-schemes:target { display: block; }
+        .content-area:not(:has(:target)) #content-about-1 { display: block; } /* Show first tab by default */
+        .content-block { padding: 20px; background-color: white; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        
+        /* Video & AI Assistant */
+        .video-player { background: #2c2c2c; height: 350px; display: flex; justify-content: center; align-items: center; border-radius: 8px; margin-bottom: 20px; }
+        .play-button::after { content: "\25B6"; font-size: 20px; color: #2c2c2c; margin-left: 5px; }
+        
+        /* Hyperlink styling for AI Assistant box */
+        .ai-link {
+            text-decoration: none; 
+            color: inherit;
+            display: block; 
+        }
+        .ai-assistant {
+            display: flex; align-items: center; background-color: white; padding: 15px;
+            border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            border: 2px solid transparent; 
+            transition: border-color 0.2s;
+        }
+        .ai-assistant:hover { border-color: #38bdf8; } 
+        
+        .ai-icon { font-size: 30px; color: #38bdf8; margin-right: 15px; }
+        .ai-icon::before { content: "\1F916"; } 
+        .ai-text { flex-grow: 1; }
+        .ai-text h4 { margin: 0 0 5px 0; color: #1a3b5c; }
+        .ai-text p { margin: 0; color: #666; font-size: 14px; }
+        .arrow-right::before { content: "\276F"; }
+        
+        
+        .tousistions { margin-top: 30px; }
+        .tousistions-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: #333; }
+        .cards-container { display: flex; gap: 20px; margin-bottom: 20px; }
+        .card { background-color: rgb(223, 147, 147); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(215, 144, 144, 0.05); width: 33.33%; text-align: center; text-decoration: none; color: inherit; cursor: pointer; }
+        
+        
+        .card-detail { display: none; padding: 20px; border-radius: 8px; background-color: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); margin-top: 10px; }
+        #detail-cuts:target, #detail-burns:target, #detail-other:target { display: block; }
+        
+        
+        .footer { background-color: #1a3b5c; color: #aaa; padding: 15px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body style="background-color: #6b8fce;">
+
+<div class="page-container">
+    
+    <div class="top-bar">
+        <div class="logo-section">
+            <span style="font-size: 24px; margin-right: 10px;">&#9733;</span> NOVA CARE
+        </div>
+        <div class="top-nav">
+            <a href="#">Hospitals</a><a href="#">Government</a><a href="#">contact</a></a>
+            <a href="#">log in</a>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        
+        <div class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li><a href="#content-about-1"><span class="icon icon-about"></span>Our Mission</a></li>
+                    <li><a href="#content-about-2"><span class="icon icon-about"></span>About the team</a></li>
+                    <li><a href="#content-helpline"><span class="icon icon-helpline"></span>Government Helpline Numbers</a></li>
+                    <li><a href="#content-schemes"><span class="icon icon-schemes"></span>Government Schemes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-area">
+            
+            <div class="content-block">
+                <div class="video-player">
+                    <video control poster="video-placeholder.jpg">
+                        <source src="C:\Users\VINAYK\Downloads\nova care 2.jpg">
+                    </video>
+                    <div class="play-button"></div>
+                </div>
+
+                <a href="https://creator.voiceflow.com/share/68e1197817c0f1488fd22b11/development" class="ai-link" target="_blank">
+                    <div class="ai-assistant">
+                        <span class="ai-icon"></span>
+                        <div class="ai-text">
+                            <h4>AI Assistant</h4>
+                            <p>Hello! How can I assist you today.</p>
+                        </div>
+                        <span class="arrow-right"></span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="tousistions">
+                <div class="tousistions-header">First AID Flash Card<span class="arrow-right"></span></div>
+                <div class="cards-container">
+                    <a href="#detail-cuts" class="card"><div class="card-icon card-icon-red" style="font-size: 30px;">&#x271A;</div><h4>FIRST AID: Cuts & Scrapes</h4><p style="font-size: 14px; color: #140808;">not deep</p></a>
+                    <a href="#detail-burns" class="card"><div class="card-icon card-icon-blue" style="font-size: 30px;">&#x2764;</div><h4>FIRST AID: Burns</h4><p style="font-size: 14px; color: #777;"></p>not severe</a>
+                    <a href="#detail-other" class="card"><div class="card-icon card-icon-green" style="font-size: 30px;">&#x25A0;</div><h4>OTHER: Topic Title</h4><p style="font-size: 14px; color: #0c0606;"></p></a>
+                </div>
+                <div id="detail-cuts" class="card-detail"><h4 style="color: #e90a20;">Detail: Cuts & Scrapes Protocol</h4><p>Clean the wound gently with soap and water. Apply a sterile dressing. Seek professional medical attention for deep or profusely bleeding cuts.</p></div>
+                <div id="detail-burns" class="card-detail"><h4 style="color: #0675ea;">Detail: Burns Treatment</h4><p>Immediately cool the burn under running cool water for 10-20 minutes. Do not use ice. Cover with cling film or a sterile dressing. Severe burns require immediate emergency care.</p></div>
+                <div id="detail-other" class="card-detail"><h4 style="color: #7eee98;">Detail: General Information</h4><p>This section provides extended information about the third topic. It is currently hidden and only appears when the third card is clicked.</p></div>
+            </div>
+            
+            <div class="sidebar-content-wrapper">
+                <div id="content-about-1" class="content-block"><h2>About Us (Mission)</h2><p>Our mission is to provide a single, reliable source for all government information and services, enhancing transparency and accessibility.<br>
+                One place solution for rural citizens who lack proper guidence in medicak care</p></div>
+                <div id="content-about-2" class="content-block"><h2>About Us (Team)</h2><p>Our Team NOVA CARE is constantly working on providing a better option to people in need<br>
+                    through multilingual AI Chat bot with speech recognisition.</p></div>
+                <div id="content-helpline" class="content-block"><h2>Government Helpline Numbers</h2><p><strong>Emergency:</strong> 100 | <strong>Disaster Management:</strong> 1070 | <strong>Health Support:</strong> 104</p><p>Clicking this link updates the content here, simulating a new page view.</p></div>
+                <div id="content-schemes" class="content-block"><h2>Government Schemes</h2><p><b>1.AYUSHMAN BHARAT:-</b> Offers free and universal services to all individuals within their service area<br>
+                <b>2.Pradhan Mantri Jan Arogya Yojana :- </b>PROVIDES A HEALTH COVER OF UP TO <br>
+                5L/- per family per year for secondary and tertiary care.<br><br>
+           <b> 3.Ayushman Vay Vandana:-</b> Provides benefits to all senior citizens aged 70 and above<br>
+            regardless of their income<br><br>
+       <b> 4.Rashtriya Arogya Nidhi:-</b> Scheme offering financial assistance to Below Poverty Line families <br>
+        for treatmentr of life-threatening diseases under brograms like <b> Health Ministers Cancer Patient Fund</b> <br><br>
+   <b> 5.Janashadi Kendras:- </b> established to make quality generic medicines and reliable implants<br>
+     available at discounted prices,<br>
+     including those for cardiovascular diseases, cancer and diabetes<br><br>
+6.<b> immunisation programs:-</b> A Nation wide vaccination Program to protect <br>
+children against serious, life threatning diseases<br><br>
+7.<b>SAANS</b> :- Works to reduce child mortality and morbidity due to <i>Pneumonia</i></p></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div> GOV-INFO HUB</div>
+        <div>
+            Copyright chtaet <a href="#">SpleaFlare</a><a href="#">Frontscite</a><a href="#">Lloklin Laerg.com</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
